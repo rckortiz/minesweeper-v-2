@@ -10,3 +10,14 @@ body {
   margin: 0;
   min-height: 100%;
 }
+
+.minesweeper {
+  width: 500px;
+  height: 500px;
+  border: 1px solid black;
+}
+.board {
+  width: 500px;
+  height: 600px;
+  border: 1px solid black;
+}
