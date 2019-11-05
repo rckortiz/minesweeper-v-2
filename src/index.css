@@ -7,6 +7,8 @@ html {
 }
 
 body {
+  display: flex;
+  justify-content: center;
   margin: 0;
   min-height: 100%;
 }
@@ -19,5 +21,65 @@ body {
 .board {
   width: 500px;
   height: 600px;
-  border: 1px solid black;
+  border: 1px solid #444;
+  border-bottom: none;
+}
+
+.board-head {
+  display: flex;
+  flex-direction: row;
+  height: 55px;
+  justify-content: space-between;
+  align-items: center;
+  border-left: 1px solid #444;
+  border-right: 1px solid #444;
+}
+
+.row {
+  display: flex;
+  height: 50px;
+}
+
+.row:last-child {
+  border-bottom: none;
+  height: 50px;
+}
+
+.cell {
+  border-right: 1px solid #444;
+  width: 49px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #444;
+}
+
+.board .row .cell .open {
+  background-color: #d4d4d4;
+}
+
+.board .row .cell .open:hover {
+  background-color: #d4d4d4;
+}
+
+.board .row .cell:hover {
+  background-color: #eeeeee;
+}
+
+.board .row .cell:last-child {
+  border-right: none;
+}
+
+.reset,
+.flag-count,
+.timer {
+  width: 55px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.reset {
+  font-size: 25px;
 }
