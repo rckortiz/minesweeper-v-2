@@ -27,7 +27,7 @@ class Board extends Component {
       }
     }
 
-    console.log(board)
+    console.table(board)
     // after we create the board, we add our mines
     for (let i = 0; i < props.mines; i++) {
       let randomRow = Math.floor(Math.random() * props.rows)
@@ -45,9 +45,56 @@ class Board extends Component {
     return board
   }
 
+  open = cell => {
+    let rows = this.state.rows
+    let current = rows[cell.y][cell.x]
+
+    if (current.hasMine && this.props.openCells === 0) {
+      console.log('cell already has mine, restart!!!')
+      let newRows = this.createBoard(this.props)
+      this.setState(
+        {
+          rows: newRows
+        },
+        () => {
+          this.open(cell)
+        }
+      )
+    } else {
+      if (!cell.hasFlag && !current.isOpen) {
+        this.props.openCellClick()
+
+        current.isOpen = true
+        this.setState({ rows })
+      }
+    }
+  }
+
+  findMines = cell => {
+    let minesInProximity = 0
+    for (let row = -1; row <= 1; row++) {
+      for (let col = -1; col <= 1; col++) {
+        if (cell.y + row >= 0 && cell.x + col >= 0) {
+          if (
+            cell.y + row < this.state.rows.length &&
+            cell.x + col < this.state.rows[0].length
+          ) {
+            if (
+              this.state.rows[cell.y + row][cell.x + col].hasMine &&
+              !(row === 0 && col === 0)
+            ) {
+              minesInProximity++
+            }
+          }
+        }
+      }
+    }
+    return minesInProximity
+  }
+
   render() {
     let rows = this.state.rows.map((row, index) => {
-      return <Row cells={row} key={index} />
+      return <Row cells={row} key={index} open={this.open} />
     })
     return <div className="board">{rows}</div>
   }
